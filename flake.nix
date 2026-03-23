@@ -47,7 +47,6 @@
               uv venv --python python3
             fi
             source .venv/bin/activate
-            uv sync
           '';
         };
       }

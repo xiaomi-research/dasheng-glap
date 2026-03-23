@@ -112,7 +112,14 @@ for label_name, score in zip(labels, scores):
 ## Development
 
 
-### UV (Recommended)
+### Nix (Recommended)
+
+```bash
+nix develop github:xiaomi-research/dasheng-glap
+pip install glap_model
+```
+
+### UV
 
 ```bash
 git clone https://github.com/xiaomi-research/dasheng-glap
