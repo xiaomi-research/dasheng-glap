@@ -1,6 +1,6 @@
 [project]
 name = 'glap-model'
-version = '0.0.11'
+version = '0.0.13'
 dependencies = [
     'numpy',
     'pyyaml',
@@ -57,6 +57,9 @@ build-backend = 'hatchling.build'
 
 [tool.hatch.metadata]
 allow-direct-references = true
+
+[tool.hatch.build.targets.sdist]
+exclude = [".direnv", ".venv", "uv.lock"]
 
 [tool.hatch.build.targets.wheel]
 bypass-selection = true
