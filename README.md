@@ -8,6 +8,7 @@
     </p>
     </p>
     <a href="https://arxiv.org/abs/2506.11350"><img src="https://img.shields.io/badge/arXiv-2506.11350-b31b1b" alt="version"></a>
+    <a href="https://huggingface.co/mispeech/GLAP"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Models-yellow" alt="Hugging Face"></a>
     <a href="https://github.com/xiaomi/glap"><img src="https://img.shields.io/badge/Platform-linux-lightgrey" alt="version"></a>
     <a href="https://www.python.org"><img src="https://img.shields.io/badge/Python-3.10+-orange" alt="version"></a>
     <a href="https://pytorch.org"><img src="https://img.shields.io/badge/PyTorch-2.0+-brightgreen" alt="python"></a>
@@ -35,6 +36,15 @@
 
 ## Usage
 
+Huggingface (Simpler)
+
+```python
+from transformers import AutoModel
+model = AutoModel.from_pretrained("mispeech/GLAP", trust_remote_code=True).eval()
+print(model.score_forward(audio = torch.randn(1, 160000), text=['The sound of noise','The sound of a person']))
+```
+
+Or as Pypi:
 
 ```bash
 pip install glap_model
