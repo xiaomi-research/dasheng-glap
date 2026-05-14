@@ -1,0 +1,38 @@
+name: Publish to PyPI
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check if version already exists on PyPI
+        id: check
+        run: |
+          CURRENT=$(python -c "import tomllib; print(tomllib.load(open('pyproject.toml','rb'))['project']['version'])")
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://pypi.org/pypi/glap-model/$CURRENT/json")
+          if [ "$STATUS" = "200" ]; then
+            echo "Version $CURRENT already exists on PyPI, skipping."
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Version $CURRENT is new, proceeding with publish."
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build
+        if: steps.check.outputs.exists == 'false'
+        run: pip install build && python -m build
+
+      - name: Publish to PyPI
+        if: steps.check.outputs.exists == 'false'
+        uses: pypa/gh-action-pypi-publish@release/v1
